@@ -26,3 +26,7 @@ server {
 }
 
 并在express中，去除/node前缀 see app.js
+
+项目使用coffeescript编写
+cd weixin
+coffee -o app -wb coffee
