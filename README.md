@@ -25,7 +25,4 @@ server {
     }
 }
 
-在express中，去除/node前缀
-if(/^\/node\/.*/.test(req.url)) {
-  req.url = req.url.replace(/^\/node\//, '/')
-}
+并在express中，去除/node前缀 see app.js
