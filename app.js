@@ -4,6 +4,7 @@ var app = express();
 var mongoose = require('mongoose')
 var fs = require('fs')
 var autoIncrement = require('mongoose-auto-increment');
+var webRoute = require('./app/web_route')
 
 app.configure(function(){
   app.use(function(req, res, next) {
@@ -12,17 +13,11 @@ app.configure(function(){
     }
     next()
   })
-});
-
-app.configure('development', function(){
-  app.use(express.static(__dirname + '/public'));
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-  var oneYear = 31557600000;
-  app.use(express.static(__dirname + '/public', { maxAge: oneYear }));
-  app.use(express.errorHandler());
+  app.use(express.methodOverride());
+  app.use(express.bodyParser());
+  app.use(app.router);
+  //添加web路由
+  webRoute(app)
 });
 
 console.log("wexin Web server has started");

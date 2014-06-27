@@ -27,6 +27,7 @@ page.upto(page+100) do |p|
     end
     puts "第#{p}页--第#{index}条"
     puts "#{content.text}, img=#{img}"
+    HTTParty.get('127.0.0.1:3001/node/joke/new', {})
     index += 1
     sleep 1
   end
