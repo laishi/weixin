@@ -17,7 +17,7 @@ class Route
 
 route = new Route()
 require('./route')(route)
-console.log route
+# console.log route
 
 module.exports = (req, res, next) ->
 	data = req.weixin

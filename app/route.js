@@ -9,7 +9,7 @@ module.exports = function(route) {
     return res.reply('hello world');
   });
   route.text(['help', 'h', '帮助'], function(data, req, res, next) {
-    return res.reply('hello 测试命令\njoke 笑话');
+    return res.reply("hello 测试命令\njoke 笑话");
   });
   return route.text(['joke', '笑话'], function(data, req, res, next) {
     return joke_controller.joke(data, req, res, next);

@@ -6,4 +6,6 @@ exports.joke = (data, req, res, next) ->
 
 #新增joke
 exports.new  = (req, res) ->
-	
+	console.log "new joke"
+	joke = req.query
+	res.send {ok: true}

@@ -29,8 +29,6 @@ route = new Route();
 
 require('./route')(route);
 
-console.log(route);
-
 module.exports = function(req, res, next) {
   var data, fn;
   data = req.weixin;
