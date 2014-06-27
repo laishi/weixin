@@ -4,7 +4,8 @@ var app = express();
 var mongoose = require('mongoose')
 var fs = require('fs')
 var autoIncrement = require('mongoose-auto-increment');
-
+var MongoStore = require('connect-mongo')
+var conf = require('./conf')
 
 //连接mongodb
 var connection = mongoose.connect('mongodb://192.168.4.13/test');
@@ -32,6 +33,11 @@ mongoose.connection.on('open', function() {
     app.use(express.methodOverride());
     app.use(express.bodyParser());
     app.use(app.router);
+    app.use(express.session({
+      secret: conf.secret,
+      maxAge: new Date(Date.now() + 3600000),
+      store: new MongoStore(conf.db)
+    }))
     //添加web路由
     var webRoute = require('./app/web_route')
     webRoute(app)
