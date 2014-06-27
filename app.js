@@ -29,7 +29,7 @@ var wechat_route = require('./app/wechat_route')
 app.use('/wechat', wechat('w231520', wechat_route));
 
 //连接mongodb
-var connection = mongoose.connect('mongodb://localhost/test');
+var connection = mongoose.connect('mongodb://192.168.4.13/test');
 //使用autoIncement插件
 autoIncrement.initialize(connection);
 var Schema = mongoose.Schema
