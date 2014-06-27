@@ -6,12 +6,27 @@ autoIncrement = require('mongoose-auto-increment');
 module.exports = function(mongoose, Schema) {
   var Joke, JokeSchema;
   JokeSchema = new Schema({
-    title: String,
-    content: String,
-    pic_url: String,
-    base_id: Number,
-    from: String
+    title: {
+      type: String,
+      "default": ""
+    },
+    content: {
+      type: String,
+      "default": ""
+    },
+    pic_url: {
+      type: String,
+      "default": ""
+    },
+    base_id: {
+      type: Number,
+      "default": 0
+    },
+    from: {
+      type: String,
+      "default": ""
+    }
   });
   mongoose.plugin(autoIncrement.plugin, 'joke');
-  return Joke = mongoose.model('user_base', JokeSchema);
+  return Joke = mongoose.model('joke', JokeSchema);
 };

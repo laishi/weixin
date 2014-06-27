@@ -11,7 +11,5 @@ module.exports = function(route) {
   route.text(['help', 'h', '帮助'], function(data, req, res, next) {
     return res.reply("hello 测试命令\njoke 笑话");
   });
-  return route.text(['joke', '笑话'], function(data, req, res, next) {
-    return joke_controller.joke(data, req, res, next);
-  });
+  return route.text(['joke', '笑话'], joke_controller.joke);
 };

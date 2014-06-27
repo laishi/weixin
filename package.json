@@ -9,6 +9,8 @@
     "express": "3.4.7",
     "wechat": "0.6.8",
     "mongoose": "3.8.12",
-    "mongoose-auto-increment": "3.0.4"
+    "mongoose-auto-increment": "3.0.4",
+    "async":"0.9.0"
+
   }
 }

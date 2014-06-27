@@ -2,14 +2,14 @@
 autoIncrement = require 'mongoose-auto-increment'
 module.exports = (mongoose, Schema) ->
   JokeSchema = new Schema
-      title: String
-      content: String
-      pic_url: String
+      title:{type: String ,default : ""}
+      content: {type: String ,default : ""}
+      pic_url: {type: String ,default : ""}
       #来源方id
-      base_id: Number
+      base_id: {type: Number ,default : 0}
       #来源 [qiushibaike]
-      from: String
+      from: {type: String ,default : ""}
 
 
   mongoose.plugin autoIncrement.plugin, 'joke'
-  Joke = mongoose.model('user_base', JokeSchema)
+  Joke = mongoose.model('joke', JokeSchema)

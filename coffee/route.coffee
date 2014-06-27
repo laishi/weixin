@@ -13,5 +13,4 @@ module.exports = (route) ->
 			"""
 			
 
-	route.text ['joke', '笑话'], (data, req, res, next) ->
-		joke_controller.joke data, req, res, next
+	route.text ['joke', '笑话'], joke_controller.joke

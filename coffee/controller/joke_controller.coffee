@@ -1,11 +1,65 @@
+
+async = require 'async'
+mongoose = require 'mongoose'
+Joke = mongoose.model 'joke'
+User = mongoose.model 'user'
+
 exports.joke = (data, req, res, next) ->
-	res.reply "昨天陪哥们去相亲，女方要礼金10万大洋并曰：“在一起50年的话，一天才5块4毛8，对没房没车的你，已经很便宜了。”
-	我看着憋成猪肝色脸的哥们，实在忍不住了，说：“这样吧！咱一天给21，不，22块，按天结账，50年后你还能多赚4倍的钱！”
-	那女的就不说话了。。。"
+	#
+	console.log data
+	async.waterfall [
+		(cb) ->
+			User.findOne user_id: data.FromUserName, (err, one) ->
+				if err 
+					console.log err
+					cb '服务器错误1'
+				else if !one
+					User.create user_id: data.FromUserName, (err, create_one)->
+						cb null, create_one
+				else
+					cb null, one
+				console.log "user is #{one}"
+		(one, cb) ->
+			# one.joke_id = one.joke_id+1
+			# Joke.find({}, null, {sort: [['_id', -1]]}, callback)
+			console.log "query joke id = #{one.joke_id}"
+			Joke.find {_id:{$gt:one.joke_id}}, (err,nextOne) ->
+				console.log "nextJoke id = #{nextOne[0]}"
+				console.log "joke === #{nextOne}, size=#{nextOne.length}"
+				if err
+					console.log err
+					cb "服务器错误"
+				else
+					cb null, one, nextOne
+
+		(user, nextOne, cb)->
+			user.joke_id = nextOne[0].id
+			jokeOne = nextOne[0]
+			user.save()
+			if jokeOne.pic_url.length > 0
+				cb null, [{title: jokeOne.title, description: jokeOne.content, picurl: jokeOne.pic_url, url: jokeOne.pic_url}]
+			else
+				cb null, jokeOne.content
+
+
+	],
+	(err, data) ->
+		if err
+			res.reply err
+		else
+			res.reply data
+	
 
 
 #新增joke
 exports.new  = (req, res) ->
-	console.log "new joke"
 	joke = req.query
-	res.send {ok: true}
+	Joke.count {base_id:joke.base_id,from : joke.from},(err,count) ->
+		console.log "err=#{err}, count=#{count}"
+		if err
+			console.log "count err #{err}"
+		else if count == 0
+			Joke.create joke
+		else
+			console.log 'repeat joke!! id=#{joke.base_id}'
+		res.send {ok: true}
