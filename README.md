@@ -7,6 +7,7 @@ wangbo's weixin server
 
 前端使用nginx做反向代理
 nginx部分配置如下
+
 server {
     listen       80;
     server_name  127.0.0.1 40f70c9e.ngrok.com;
@@ -28,5 +29,4 @@ server {
 并在express中，去除/node前缀 see app.js
 
 项目使用coffeescript编写
-cd weixin
-coffee -o app -wb coffee
+cd weixin & coffee -o app -wb coffee
